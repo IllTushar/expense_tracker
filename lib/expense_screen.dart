@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/expense_model/expense.dart';
 import 'package:expense_tracker/expense_list.dart';
+import 'package:expense_tracker/bottomSheet/bottomSheetDialog.dart';
+
 class ExpenseScreen extends StatefulWidget {
   @override
   State<ExpenseScreen> createState() => _ExpenseScreenState();
@@ -21,14 +23,30 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         category: Category.food),
   ];
 
+  void _openBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(20.0),
+          ),
+        ),
+        builder: (ctx) => BottomSheetDialog());
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Column(
-        children: [
-         Expanded(child: ExpenseList(expense: _registerExpense))
+      appBar: AppBar(
+        elevation: 2.0,
+        title: const Text("Expense Tracker"),
+        actions: [
+          IconButton(onPressed: _openBottomSheet, icon: const Icon(Icons.add))
         ],
+      ),
+      body: Column(
+        children: [Expanded(child: ExpenseList(expense: _registerExpense))],
       ),
     );
   }
