@@ -28,7 +28,6 @@ class ExpenseList extends StatelessWidget {
                         Icon(categoryIcons[expense[index].category]),
                         const SizedBox(width: 5.0),
                         Text(expense[index].formattedDate)
-                      
                       ],
                     ),
                   ],
