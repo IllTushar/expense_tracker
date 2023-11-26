@@ -30,6 +30,32 @@ class _BottomSheetDialogState extends State<BottomSheetDialog> {
     });
   }
 
+  void _dataValidations() {
+    /*
+     tryParse... it can return null and also convert string into integer..
+     also convert binary ,hexadecimal ,octal into decimal formation..
+     */
+    final enterAmount = double.tryParse(_amount.text);
+    final newAmount = enterAmount == null || enterAmount <= 0;
+    if (_amount.text.isEmpty || newAmount || showDateTime == null) {
+      // Show DialogBox...
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: const Text("Invaild"),
+                content: const Text("Please check your validations"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("close"))
+                ],
+              ));
+      return;
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -81,13 +107,18 @@ class _BottomSheetDialogState extends State<BottomSheetDialog> {
           ),
           Row(
             children: [
-              const SizedBox(height: 18,),
+              const SizedBox(
+                height: 18,
+              ),
               DropdownButton(
                 value: _selectedCategory,
                 items: category.Category.values.map((category) {
                   return DropdownMenuItem(
                     value: category,
-                    child: Text(category.name.toLowerCase(),style: GoogleFonts.aBeeZee(),),
+                    child: Text(
+                      category.name.toLowerCase(),
+                      style: GoogleFonts.aBeeZee(),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -102,7 +133,7 @@ class _BottomSheetDialogState extends State<BottomSheetDialog> {
               const Spacer(),
               ElevatedButton(
                   onPressed: () {
-                    print(_newText.text);
+                    _dataValidations();
                   },
                   child: const Text("Save And Continue")),
             ],
